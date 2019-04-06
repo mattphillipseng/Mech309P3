@@ -11,11 +11,11 @@ clear all
 clc
 
 % Format of output
-     format short
-    %format long
+    %format short
+    format long
 
 %% Input Variables
-grid_x = 3; %m, num nodes
+grid_x = 3 ; %m, num nodes
 grid_y = 5; %n, num nodes
 
 delta = 1/(grid_x-1) %cm
@@ -31,3 +31,4 @@ hok = h/k;
 
 %% Method
 A = A_gen(grid_x,grid_y,hok,one_ov_delta)
+b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta)
