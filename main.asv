@@ -11,15 +11,17 @@ clear all
 clc
 
 % Format of output
-    % format short
+    %format short
     format long
 
 %% Input Variables
-grid_x = 3; %m, num nodes
-grid_y = 5; %n, num nodes
+grid_x = 3 ; %m, num nodes on x
+grid_y = 5; %n, num nodes on y
+
+nodes = grid_x*grid_y;
 
 delta = 1/(grid_x-1) %cm
-1
+one_ov_delta = 1/delta;
 
 T_b = 420 %Kelvin
 T_inf = 370 %Kelvin
@@ -30,4 +32,7 @@ hok = h/k;
 
 
 %% Method
-A = A_gen(grid_x,grid_y,hok,delta)
+A = A_gen(grid_x,grid_y,hok,one_ov_delta)
+b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta)
+
+%[L,U] = LU_decomp(A,nodes);

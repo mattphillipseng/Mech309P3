@@ -9,7 +9,7 @@ row = 1;
 x = 0;
 for col = 1:grid_x
     temp = T_inf + g(x)*(T_b-T_inf);
-    index = ind(row,col)
+    index = ind(row,col);
     b(index) = temp;
     x = x + delta;
 end

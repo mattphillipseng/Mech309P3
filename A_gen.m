@@ -22,23 +22,14 @@ function A = A_gen(x,y,hok,one_ov_delta)
                 A(matR,matR) = hok - one_ov_delta;
                 A(matR,matR-x) = one_ov_delta; %col-x gives mult by the physical point below
                 
-            elseif (col==1) && (row~=1) && (row~=y) %node is at a left side edge, but not a corner
+            elseif (col==1) && (row~=1) %node is at a left side edge
                 A(matR,matR) = hok - one_ov_delta;
                 A(matR,matR+1) = one_ov_delta; %col+1 gives mult by physical point to right
                 
-            elseif (col==x) && (row~=1) && (row~=y) %node is at a right side edge, but not a corner
+            elseif (col==x) && (row~=1) %node is at a right side edge
                 A(matR,matR) = hok - one_ov_delta;
                 A(matR,matR-1) = one_ov_delta; %col-1 gives mult by physical point to left
                 
-            elseif (row==y) && (col==1) %node is at top left corner
-                A(matR,matR) = hok - one_ov_delta;
-                A(matR,matR-x) = one_ov_delta/2; %mult by point below
-                A(matR,matR+1) = one_ov_delta/2; %mult by point to right
-                
-            else (row==y) && (col==x) %node is at top right corner
-                A(matR,matR) = hok - one_ov_delta;
-                A(matR,matR-x) = one_ov_delta/2; %mult by point below
-                A(matR,matR-1) = one_ov_delta/2; %mult by point to left
                 
             end
             col = col + 1
