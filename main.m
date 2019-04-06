@@ -11,8 +11,8 @@ clear all
 clc
 
 % Format of output
-    % format short
-    format long
+     format short
+    %format long
 
 %% Input Variables
 grid_x = 3; %m, num nodes

@@ -2,14 +2,16 @@ function A = A_gen(x,y,hok,one_ov_delta)
     nodes = x*y;
     A = zeros(nodes);
     
-    row = 1;
-    col = 1;
-    while row<=nodes
-        while col<=nodes
+    row = 1; %physical row
+    col = 1; %physical column
+    matR = 1; %matrix row
+    
+    while row<=x
+        while col<=y
             if (row~=1) && (row~=y) &&  (col~=1) && (col~=x)%node is not at an edge, node is inside
-                A(row,col) = -4; %node we're at
-                A(row,col+x) = 1; %for the node above
-                A(row,col-x) = 1; %for the node below
+                A(matR,matR) = -4; %node we're at
+                A(matR,matR+x) = 1; %for the node above
+                A(matR,matR-x) = 1; %for the node below
                 A(row,col+1) = 1; %for the node on right
                 A(row,col-1) = 1; %for the node on left
                 
@@ -40,6 +42,7 @@ function A = A_gen(x,y,hok,one_ov_delta)
                 
             end
             col = col + 1;
+            matR = matR + 1;
         end
         row = row + 1;
     end
