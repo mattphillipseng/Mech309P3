@@ -1,87 +1,57 @@
-%% Plotting Question 2a
-% Make sure to run main.m first
+%% Makes line plot for problem 2a
+function plots = plot2a(S1,S2,S3,S4)
 
-
-p2b_table = zeros(4,1); % num unknowns, cpu time, bytes for A
-
-%% Generating Data for 6x11
-tic;
-soln_6x11 = solve_steady(6,11,T_b,T_inf,hok);
-toc;
-cpu_time=toc;
-p2b_table(1,1:3)=[6*11,cpu_time,8*(6*11)^2];
-
-heights_6x11 = linspace(0,2,11);
+%% Prepare Data
+% 6 by 11
+heights_6x11 = linspace(0,2,11); %from 0 to 2, with 11 nodes
 
 s_ind = 1; %soln matrix index
 t_ind = 1; %index for temps to plot
-temps_6x11 = zeros(11,1);
+TL_6x11 = zeros(11,1);
 
 for t_ind = 1:11
-    temps_6x11(t_ind) = soln_6x11(s_ind);
+    TL_6x11(t_ind) = S1(s_ind);
     s_ind = s_ind + 6;
 end
-fprintf('6x11 done \n')
 
-%% Generating Data for 16x31
-tic;
-soln_16x31 = solve_steady(16,31,T_b,T_inf,hok);
-toc;
-cpu_time=toc;
-p2b_table(2,1:3)=[16*31,cpu_time,8*(16*31)^2];
-
+% 16 by 31
 heights_16x31 = linspace(0,2,31);
 
 s_ind = 1; %soln matrix index
 t_ind = 1; %index for temps to plot
-temps_16x31 = zeros(31,1);
+TL_16x31 = zeros(31,1);
 
 for t_ind = 1:31
-    temps_16x31(t_ind) = soln_16x31(s_ind);
+    TL_16x31(t_ind) = S2(s_ind);
     s_ind = s_ind + 16;
 end
-fprintf('16x31 done \n')
 
-%% Generating Data for 46x91
-tic;
-soln_46x91 = solve_steady(46,91,T_b,T_inf,hok);
-toc;
-cpu_time=toc;
-p2b_table(3,1:3)=[46*91,cpu_time,8*(46*91)^2];
-
+% 46 by 91
 heights_46x91 = linspace(0,2,91);
 
 s_ind = 1; %soln matrix index
 t_ind = 1; %index for temps to plot
-temps_46x91 = zeros(91,1);
+TL_46x91 = zeros(91,1);
 
 for t_ind = 1:91
-    temps_46x91(t_ind) = soln_46x91(s_ind);
+    TL_46x91(t_ind) = S3(s_ind);
     s_ind = s_ind + 46;
 end
-fprintf('46x91 done \n')
 
-%% Generating Data for 61x121
-tic;
-soln_61x121 = solve_steady(61,121,T_b,T_inf,hok);
-toc;
-cpu_time=toc;
-p2b_table(4,1:3)=[61*121,cpu_time,8*(61*121)^2];
-
+% 61 by 121
 heights_61x121 = linspace(0,2,121);
 
 s_ind = 1; %soln matrix index
 t_ind = 1; %index for temps to plot
-temps_61x121 = zeros(121,1);
+TL_61x121 = zeros(121,1);
 
 for t_ind = 1:121
-    temps_61x121(t_ind) = soln_61x121(s_ind);
+    TL_61x121(t_ind) = S4(s_ind);
     s_ind = s_ind + 61;
 end
-fprintf('61x121 done \n')
 
 
-%% Plotting 2a
+%% Make Plot
 font_size = 15;
 line_size = 15;
 line_width = 2;
@@ -100,3 +70,5 @@ legend('6x11','16x31','46x91','61x121','fontsize',font_size-4,'Interpreter','lat
 pbaspect([3 1 1]);
 
 print('plots/2a','-depsc','-r720');
+
+end
