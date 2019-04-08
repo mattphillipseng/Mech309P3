@@ -72,6 +72,6 @@ surf(positions_x,positions_y,temps);
 
 
 %% Plotting 
-[S1,S2,S3,S4,p2b_table] = get_solns(T_b,T_inf,hok)
-plot2a
+[S1,S2,S3,S4,p2b_table] = get_solns(T_b,T_inf,hok);
+plot2a(S1,S2,S3,S4);
 
