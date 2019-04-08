@@ -28,22 +28,19 @@ T_b = 420; %Kelvin
 T_inf = 370; %Kelvin
 
 %% Input Constants
-h = 15/(100*100); %heat transfer coefficient of air ********UNITS???**********
-k = 413/100; %thermal conductivity of fin [W/cm-K]
+h = 5/(100*100); %heat transfer coefficient of air [W/cm^2-K]
+k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 
 hok = h/k;
 
 
 %% Manual Input Method
-tic
 A = A_gen(grid_x,grid_y,hok,one_ov_delta);
 b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
 
 [L,U] = LU_decomp(A,nodes);
 
 x = solve_LU(b,L,U,nodes);
-toc
-
 
 
 
