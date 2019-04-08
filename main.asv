@@ -44,10 +44,25 @@ b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
 x = solve_LU(b,L,U,nodes);
 toc
 
+%% For Graphing
+soln_6x11 = solve_steady(6,11,T_b,T_inf,hok);
+heights_6x11 = linspace(0,2,11);
+
+soln_16x31 = solve_steady(16,31,T_b,T_inf,hok);
+heights_16x31 = linspace(0,2,31);
+
+soln_46x91 = solve_steady(46,91,T_b,T_inf,hok);
+heights_3x5 = linspace(0,2,5);
+
+soln_3x5 = solve_steady(3,5,T_b,T_inf,hok);
+heights_3x5 = linspace(0,2,5);
+
+soln_3x5 = solve_steady(3,5,T_b,T_inf,hok);
+heights_3x5 = linspace(0,2,5);
 
 
 
-%% Contour plot
+
 
 %{
 temps = x;
@@ -73,7 +88,4 @@ end
 surf(positions_x,positions_y,temps);
 %}
 
-
-%% Plotting 
-plot2a
 

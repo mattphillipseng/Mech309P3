@@ -1,9 +1,11 @@
 function A = A_gen(x,y,hok,one_ov_delta)
     nodes = x*y;
-    A = zeros(nodes);
     
-    row = 1 %physical row
-    matR = 1 %matrix row
+    A = zeros(nodes);
+   
+    
+    row = 1; %physical row
+    matR = 1; %matrix row
     
     while row<=y
         col = 1; %physical column
@@ -32,9 +34,9 @@ function A = A_gen(x,y,hok,one_ov_delta)
                 
                 
             end
-            col = col + 1
-            matR = matR + 1
+            col = col + 1;
+            matR = matR + 1;
         end
-        row = row + 1
+        row = row + 1;
     end
 end
