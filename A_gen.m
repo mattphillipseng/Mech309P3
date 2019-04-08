@@ -3,7 +3,6 @@ function A = A_gen(x,y,hok,one_ov_delta)
     
     A = zeros(nodes);
    
-    
     row = 1; %physical row
     matR = 1; %matrix row
     
@@ -31,7 +30,6 @@ function A = A_gen(x,y,hok,one_ov_delta)
             elseif (col==x) && (row~=1) %node is at a right side edge
                 A(matR,matR) = hok - one_ov_delta;
                 A(matR,matR-1) = one_ov_delta; %col-1 gives mult by physical point to left
-                
                 
             end
             col = col + 1;
