@@ -14,6 +14,4 @@ for mat_row = 1:max_rows
     end
 end
 
-
-
 end
