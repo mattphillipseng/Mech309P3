@@ -1,4 +1,6 @@
 function [bottom_Ts] = bottom_T_transient(grid_x,t,T_b,T_inf)
+% Gives the temps of the nodes at the bottom at a certain point in time.
+
 
 delta = 1/(grid_x-1);
 bottom_Ts = zeros(grid_x,1);

@@ -1,4 +1,4 @@
-function [T_point]  = euler(grid_x,grid_y,T_b,T_inf,hok)
+function [T_point_at_times]  = euler(grid_x,grid_y,T_b,T_inf,hok)
 
 %% Material Constants
 rho = 8.96/1000; % Density, [kg/cm^3]
@@ -13,6 +13,8 @@ T_vec(1:grid_x) = bottom_T_transient(grid_x,0,T_b,T_inf);
 %% Euler's Method
 dt = 10^(-4); % time step, s
 for time = 0:dt:4
+    %T_vec = T_vec + dt*delta_T_vec(T_vec,grid_x,grid_y);
+    
     
 end
 
