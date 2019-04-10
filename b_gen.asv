@@ -18,7 +18,7 @@ end
 
 %% Top Surface
 row = grid_y;
-for col = 2:grid_x-1
+for col = 2:grid_x
     temp = hok*T_inf;
     index = ind(row,col);
     b(index) = temp;
