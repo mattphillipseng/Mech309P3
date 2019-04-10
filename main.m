@@ -43,34 +43,6 @@ b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
 x = solve_LU(b,L,U,nodes);
 
 
-
-%% Contour plot
-
-%{
-temps = x;
-
-positions_x = zeros(nodes,1);
-positions_y= zeros(nodes,1);
-pos_x = 0;
-pos_y = 0;
-index = 1;
-for lv1 = 1:grid_y
-    pos_x = 0;
-    for lv2 = 1:grid_x
-        positions_x(index) = pos_x;
-        positions_y(index) = pos_y;
-        
-        pos_x = pos_x + delta;
-        index = index +1;
-    end
-    pos_y = pos_y + delta;
-end
-
-
-surf(positions_x,positions_y,temps);
-%}
-
-
 %% Plotting 
 [S1,S2,S3,S4,p2b_table] = get_solns(T_b,T_inf,hok);
 plot2a(S1,S2,S3,S4);
