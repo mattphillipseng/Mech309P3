@@ -33,7 +33,7 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 
 hok = h/k;
 
-if false
+
 %% Manual Input Method
 A = A_gen(grid_x,grid_y,hok,one_ov_delta);
 b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
@@ -43,13 +43,12 @@ b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
 x = solve_LU(b,L,U,nodes);
 
 
-%% Plotting steady state
+%% Plotting part 1
 [S1,S2,S3,S4,p2b_table] = get_solns(T_b,T_inf,hok);
 plot2a(S1,S2,S3,S4);
 heat_plots(S1,S2,S3,S4);
-end
 
 
-%% Transient
-transient_3x5 = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k);
+
+%%
 

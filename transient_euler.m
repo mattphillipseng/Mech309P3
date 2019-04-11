@@ -1,4 +1,4 @@
-function [T_point_at_times]  = euler(grid_x,grid_y,T_b,T_inf,hok,k)
+function [T_times]  = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k)
 
 %% Material Constants
 rho = 8.96/1000; % Density, [kg/cm^3]
@@ -9,6 +9,7 @@ alph = k/(rho*C_p);
 
 %% Build initial solution (temperature) vector
 nodes = grid_x*grid_y;
+dL = 1/(grid_x-1);
 
 T_last = T_inf*ones(nodes,1);
 T_last(1:grid_x) = bottom_T_transient(grid_x,0,T_b,T_inf);
@@ -21,23 +22,25 @@ t_max = 4; % s
 
 times = [0:dt:t_max];
 
-%% To store solution vectors over time
-
-%T_times
+%% To store solution vectors at each time step
+steps = size(times);
+s = steps(2); %
+T_times = zeros(nodes,s);
 
 
 
 
 
 %% Euler's Method
-
+step = 1;
 for time = 0:dt:t_max
+    
     
     % Inside Nodes, PDE!
     for row = 2:(grid_y - 1)
         for col = 2:(grid_x - 1)
             index = ind(row,col);
-            T_vec(index) = T_last(index) + dt*alph*(-4*T_last(index) + T_last(index-1) + T_last(index+1) + T_last(index-grid_x) + T_last(index+grid_x))/(dL^2);
+            T_vec(index) = T_last(index) + dt*alph*((-4*T_last(index) + T_last(index-1) + T_last(index+1) + T_last(index-grid_x) + T_last(index+grid_x))/(dL^2));
         end
     end
     
@@ -45,7 +48,7 @@ for time = 0:dt:t_max
     row = grid_y;
     for col = 2:grid_x-1
         index = ind(row,col);
-        num = hok*T_inf + T_last(index-x)/dL; %point below
+        num = hok*T_inf - T_last(index-grid_x)/dL; %point below
         denom = hok - 1/dL;
         T_vec(index) = num/denom;
     end
@@ -54,7 +57,7 @@ for time = 0:dt:t_max
     col = 1;
     for row = 2:grid_y-1
         index = ind(row,col);
-        num = hok*T_inf + T_last(index+1)/dL; %point to right
+        num = hok*T_inf - T_last(index+1)/dL; %point to right
         denom = hok - 1/dL;
         T_vec(index) = num/denom;
     end
@@ -63,7 +66,7 @@ for time = 0:dt:t_max
     col = grid_x;
     for row = 2:grid_y-1
         index = ind(row,col);
-        num = hok*T_inf + T_last(index-1)/dL; %point to left
+        num = hok*T_inf - T_last(index-1)/dL; %point to left
         denom = hok - 1/dL;
         T_vec(index) = num/denom;
     end
@@ -71,8 +74,12 @@ for time = 0:dt:t_max
     % Bottom Surface
     T_vec(1:grid_x) = bottom_T_transient(grid_x,time,T_b,T_inf);
     
+    T_vec
     
+    % Do before next step
+    T_times(1:nodes,step)=T_vec;
     T_last = T_vec;
+    step=step+1;
 end
 
 
