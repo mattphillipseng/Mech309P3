@@ -1,4 +1,4 @@
-function [T_times]  = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k)
+function [T_times,times]  = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k)
 
 %% Material Constants
 rho = 8.96/1000; % Density, [kg/cm^3]
@@ -31,16 +31,6 @@ T_times = zeros(nodes,s);
 %% Euler's Method
 step = 1; % just used to store the solution matrix at each time step
 for time = 0:dt:t_max
-    
-    % Inside Nodes, PDE!
-    for row = 2:(grid_y - 1) %go through rows (2:4)
-        for col = 2:(grid_x - 1) % go through cols (2:2)
-            index = ind(row,col);
-            change = dt*alph*((-4*T_last(index) + T_last(index-1) + T_last(index+1) + T_last(index-grid_x) + T_last(index+grid_x))/(dL^2));
-            
-            T_vec(index) = T_last(index) + change;
-        end
-    end
     % Bottom Surface
     T_vec(1:grid_x) = bottom_T_transient(grid_x,time,T_b,T_inf);
     
@@ -71,7 +61,15 @@ for time = 0:dt:t_max
         T_vec(index) = num/denom;
     end
     
-    
+    % Inside Nodes, PDE!
+    for row = 2:(grid_y - 1) %go through rows (2:4)
+        for col = 2:(grid_x - 1) % go through cols (2:2)
+            index = ind(row,col);
+            change = dt*alph*((-4*T_vec(index) + T_vec(index-1) + T_vec(index+1) + T_vec(index-grid_x) + T_vec(index+grid_x))/(dL^2));
+            
+            T_vec(index) = T_vec(index) + change;
+        end
+    end
     
     T_vec;
     % Do before next step

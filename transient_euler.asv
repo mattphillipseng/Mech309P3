@@ -12,7 +12,7 @@ nodes = grid_x*grid_y;
 dL = 1/(grid_x-1);
 
 T_last = T_inf*ones(nodes,1);
-T_last(1:grid_x) = bottom_T_transient(grid_x,0,T_b,T_inf);
+%T_last(1:grid_x) = bottom_T_transient(grid_x,0,T_b,T_inf);
 
 T_vec = T_last;
 
@@ -29,9 +29,37 @@ T_times = zeros(nodes,s);
 
 
 %% Euler's Method
-step = 1;
+step = 1; % just used to store the solution matrix at each time step
 for time = 0:dt:t_max
+    % Bottom Surface
+    T_vec(1:grid_x) = bottom_T_transient(grid_x,time,T_b,T_inf);
     
+    % Left Surface
+    col = 1;
+    for row = 2:grid_y-1
+        index = ind(row,col);
+        num = T_last(index+1)*(1/dL) + (hok*T_inf); %point to right
+        denom = hok + (1/dL);
+        T_vec(index) = num/denom;
+    end
+
+    % Right Surface
+    col = grid_x;
+    for row = 2:grid_y-1
+        index = ind(row,col);
+        num = T_last(index-1)*(1/dL) + (hok*T_inf); %point to left
+        denom = hok + (1/dL);
+        T_vec(index) = num/denom;
+    end
+    
+    % Top Surface
+    row = grid_y;
+    for col = 2:grid_x-1
+        index = ind(row,col);
+        num = T_last(index-grid_x)*(1/dL) + (hok*T_inf); %point below
+        denom = hok + (1/dL);
+        T_vec(index) = num/denom;
+    end
     
     % Inside Nodes, PDE!
     for row = 2:(grid_y - 1) %go through rows (2:4)
@@ -43,38 +71,10 @@ for time = 0:dt:t_max
         end
     end
     
-    % Top Surface
-    row = grid_y;
-    for col = 2:grid_x-1
-        index = ind(row,col);
-        num = ((T(index-grid_x))/dL) + (hok*T_inf); %point to right
-        denom = hok + (1/dL);
-        T_vec(index) = num/denom;
-    end
-
-    % Left Surface
-    col = 1;
-    for row = 2:grid_y-1
-        index = ind(row,col);
-        num = ((T(index+1))/dL) + (hok*T_inf); %point to right
-        denom = hok + (1/dL);
-        T_vec(index) = num/denom;
-    end
-
-    % Right Surface
-    col = grid_x;
-    for row = 2:grid_y-1
-        index = ind(row,col);
-        num = hok*T_inf - T_last(index-1)/dL; %point to left
-        denom = hok - 1/dL;
-        T_vec(index) = num/denom;
-    end
     
-    % Bottom Surface
-    T_vec(1:grid_x) = bottom_T_transient(grid_x,time,T_b,T_inf);
+    
     
     T_vec;
-    
     % Do before next step
     T_times(1:nodes,step)=T_vec;
     T_last = T_vec;
