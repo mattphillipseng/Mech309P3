@@ -49,7 +49,7 @@ plot2a(S1,S2,S3,S4);
 heat_plots(S1,S2,S3,S4);
 end
 
-
+if true
 %% Transient
 transient_3x5 = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k);
-
+end
