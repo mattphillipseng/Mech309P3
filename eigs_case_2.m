@@ -1,4 +1,4 @@
-function [eig_P,eig_D] = eigs_case_2
+function [eig_P,eig_D,T_0,C_mat,r_mat] = eigs_case_2
 
 T_b = 420;
 T_inf = 370;
@@ -14,23 +14,23 @@ omega2 = ((h/k)*T_inf)/( (1/dL)+(h/k) );
 gx = 1.05*0.5*(1-0.5);
 sigma = T_inf + gx*(T_b - T_inf);
 
-C_Mat = gamma*[
+C_mat = gamma*[
     (-4+2*omega1), 1, 0;
     1, (-4+2*omega1), 1;
     0, 1, (-4+3*omega1);
 ];
 
-r_mat = gamma*[(2*omega2)+sigma , 2*omega2, 3*omega2];
+r_mat = gamma*[(2*omega2)+sigma ; 2*omega2; 3*omega2];
 
 T_0 = [T_inf;T_inf;T_inf];
-T_soln = T_0;
+%T_soln = T_0;
 
-%% Find solution - getting eigs manually
+%% Find eigs manually
 
 
 
-%% Find solution - getting eigs using built in function
-[eig_P,eig_D] = eig(C_Mat);
+%% Find eigs using built in function
+[eig_P,eig_D] = eig(C_mat);
 
 
 

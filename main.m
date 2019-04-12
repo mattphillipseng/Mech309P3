@@ -85,9 +85,12 @@ end
 want_to_do_transient_case2 = true; % ******* INPUT *******
 if want_to_do_transient_case2
 
-[eig_P,eig_D] = eigs_case_2;
+[eig_P,eig_D,T_0,C,r] = eigs_case_2;
 
-%solve_trans_case2 = 
+% Solution from manually solved eigs
+
+% solution from matlab solved eigs
+[soln_eig] = trans_case_2(eig_P,eig_D,T_0,C,r);
 
 
 
