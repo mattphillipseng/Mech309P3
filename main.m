@@ -52,6 +52,7 @@ end
 if true
 %% Transient
 [transient_euler,times_euler] = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k);
+plot_transient(transient_euler,times_euler);
 
 
 
