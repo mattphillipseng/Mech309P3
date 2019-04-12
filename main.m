@@ -15,6 +15,7 @@ clc
     %format long
 
 %% Input Grid Size
+% ONLY USE EVEN GRIDS!!! x=1cm, y=2cm
 grid_x = 3; %m, num nodes on x
 grid_y = 5; %n, num nodes on y
 
@@ -33,13 +34,11 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 
 hok = h/k;
 
-
-
-
-%% Manual Input Method
+%% Steady State
 want_to_do_steady_state = false; % INPUT
 if want_to_do_steady_state
-    
+
+% Manual Input Method
 A = A_gen(grid_x,grid_y,hok,one_ov_delta);
 b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
 [L,U] = LU_decomp(A,nodes);
@@ -71,13 +70,24 @@ t_euler_16x31 = toc;
 tic;
 [transient_rk2_16x31,times_rk2_16x31] = transient_rk2(16,31,T_b,T_inf,hok,k,4);
 t_rk2_16x31 = toc;
-% TODO plot
 
+plot_transient_16x31(transient_euler_16x31,times_euler_16x31,transient_rk2_16x31,times_rk2_16x31)
 
 % Problem 3
-[t_inf_euler,times_inf_euler] = transient_euler(3,5,T_b,T_inf,hok,k,60);
-[t_inf_rk2,times_inf_rk2] = transient_rk2(3,5,T_b,T_inf,hok,k,60);
+% Doing on a 16x31 grid
+[t_inf_euler,times_inf_euler] = transient_euler(16,31,T_b,T_inf,hok,k,20);
+[t_inf_rk2,times_inf_rk2] = transient_rk2(16,31,T_b,T_inf,hok,k,20);
 % TODO plot
+plot_transient_inf(t_inf_euler,times_inf_euler,t_inf_rk2,times_inf_rk2)
+
+
+
+%% Transient Case 2
+
+
+
+
+
 
 
 end

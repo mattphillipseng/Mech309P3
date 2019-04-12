@@ -78,7 +78,7 @@ plot(times_euler,pts_rk2,'m--','Linewidth',line_width)
 
 xlabel('Time (s)','fontsize',font_size,'Interpreter','latex');
 ylabel('Temperature (K)','fontsize',font_size,'Interpreter','latex');
-%legend('Euler','RK4','fontsize',font_size,'Interpreter','latex','NumColumns',4);
+legend('Euler','RK4','fontsize',font_size,'Interpreter','latex','Location','southeast','NumColumns',4);
 pbaspect([2 1 1]);
 
 print('plots/transient','-depsc','-r720');
