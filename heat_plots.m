@@ -3,7 +3,8 @@ function heats = heat_plots(S1,S2,S3,S4)
 font_size = 15;
 line_size = 15;
 line_width = 2;
-levels = linspace(370,380,50);
+
+levels = 100;
 colormap_setting = 'jet';
 
 %% 6 x 11
@@ -13,7 +14,7 @@ y_lin = linspace(0,2,11);
 S1_mat = vector2matrix(S1,6);
 
 figure
-contourf(S1_X,S1_Y,S1_mat,50,'edgecolor','none');
+contourf(S1_X,S1_Y,S1_mat,levels,'edgecolor','none');
 colormap(colormap_setting);
 colorbar;
 xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');
@@ -29,7 +30,7 @@ y_lin = linspace(0,2,31);
 S2_mat = vector2matrix(S2,16);
 
 figure
-contourf(S2_X,S2_Y,S2_mat,50,'edgecolor','none');
+contourf(S2_X,S2_Y,S2_mat,levels,'edgecolor','none');
 colormap(colormap_setting);
 colorbar;
 xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');
@@ -44,7 +45,7 @@ y_lin = linspace(0,2,91);
 S3_mat = vector2matrix(S3,46);
 
 figure
-contourf(S3_X,S3_Y,S3_mat,50,'edgecolor','none');
+contourf(S3_X,S3_Y,S3_mat,levels,'edgecolor','none');
 colormap(colormap_setting);
 colorbar;
 xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');
@@ -59,7 +60,7 @@ y_lin = linspace(0,2,121);
 S4_mat = vector2matrix(S4,61);
 
 figure
-contourf(S4_X,S4_Y,S4_mat,50,'edgecolor','none');
+contourf(S4_X,S4_Y,S4_mat,levels,'edgecolor','none');
 colormap(colormap_setting);
 colorbar;
 xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');

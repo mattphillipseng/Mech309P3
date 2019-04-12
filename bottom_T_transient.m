@@ -21,7 +21,7 @@ end
         if time<=2
             phi = 1 + 0.05*sin(10*pi*time);           
         else
-            phi = 0.05*exp(1)^(-0.5*(time-2)) + 0.95;
+            phi = 0.05*exp(-0.5*(time-2)) + 0.95;
         end
         g = 1.05*x*(1-x)*phi;
     end

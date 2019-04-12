@@ -1,7 +1,8 @@
-function [T_times]  = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k)
+function [T_times,times]  = transient_rk2(grid_x,grid_y,T_b,T_inf,hok,k,t_max)
 
 %% Material Constants
-rho = 8.96/1000; % Density, [kg/cm^3]
+%rho = 8.96/1000; % Density, [kg/cm^3]
+rho = 8.96; % Density, [kg/cm^3]
 C_p = 0.39; % Heat capacity at const pressure. [kJ/kg-K]
 
 alph = k/(rho*C_p);
@@ -18,7 +19,6 @@ T_vec = T_last;
 
 %% Time step, Max time
 dt = 10^(-4); % time step, s
-t_max = 4; % s
 
 times = [0:dt:t_max];
 
@@ -27,10 +27,39 @@ steps = size(times);
 s = steps(2); %
 T_times = zeros(nodes,s);
 
+%% Function for RK
+    function result = f_rk(T_last,index)
+        T_middle = T_last(index);
+        
+        T_above = T_last(index + grid_x);
+        T_below = T_last(index - grid_x);
+        T_left = T_last(index - 1);
+        T_right = T_last(index + 1);
+        
+        result = alph*((-4*T_middle) + T_above + T_below + T_left + T_right)*(1/(dL^2));
+    end
 
-%% Euler's Method
+
+
+
+%% RK2 Method
 step = 1; % just used to store the solution matrix at each time step
 for time = 0:dt:t_max
+    
+if time~=0    
+    % Inside Nodes, PDE!
+    for row = 2:(grid_y - 1) %go through rows (2:4)
+        for col = 2:(grid_x - 1) % go through cols (2:2)
+            index = ind(row,col);
+            
+            K1 = f_rk(T_last , index);
+            K2 = f_rk(T_last+(dt/2)*K1 , index);
+            
+            T_vec(index) = T_last(index) + dt*K2;
+        end
+    end
+    
+    
     % Bottom Surface
     T_vec(1:grid_x) = bottom_T_transient(grid_x,time,T_b,T_inf);
     
@@ -38,7 +67,7 @@ for time = 0:dt:t_max
     col = 1;
     for row = 2:grid_y-1
         index = ind(row,col);
-        num = T_last(index+1)*(1/dL) + (hok*T_inf); %point to right
+        num = T_vec(index+1)*(1/dL) + (hok*T_inf); %point to right
         denom = hok + (1/dL);
         T_vec(index) = num/denom;
     end
@@ -47,7 +76,7 @@ for time = 0:dt:t_max
     col = grid_x;
     for row = 2:grid_y-1
         index = ind(row,col);
-        num = T_last(index-1)*(1/dL) + (hok*T_inf); %point to left
+        num = T_vec(index-1)*(1/dL) + (hok*T_inf); %point to left
         denom = hok + (1/dL);
         T_vec(index) = num/denom;
     end
@@ -56,23 +85,12 @@ for time = 0:dt:t_max
     row = grid_y;
     for col = 2:grid_x-1
         index = ind(row,col);
-        num = T_last(index-grid_x)*(1/dL) + (hok*T_inf); %point below
+        num = T_vec(index-grid_x)*(1/dL) + (hok*T_inf); %point below
         denom = hok + (1/dL);
         T_vec(index) = num/denom;
     end
     
-    % Inside Nodes, PDE!
-    for row = 2:(grid_y - 1) %go through rows (2:4)
-        for col = 2:(grid_x - 1) % go through cols (2:2)
-            index = ind(row,col);
-            change = dt*alph*((-4*T_last(index) + T_last(index-1) + T_last(index+1) + T_last(index-grid_x) + T_last(index+grid_x))/(dL^2));
-            
-            T_vec(index) = T_last(index) + change;
-        end
-    end
-    
-    
-    
+end  
     
     T_vec;
     % Do before next step

@@ -33,13 +33,16 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 
 hok = h/k;
 
-if false
+
+
+
 %% Manual Input Method
+want_to_do_steady_state = false; % INPUT
+if want_to_do_steady_state
+    
 A = A_gen(grid_x,grid_y,hok,one_ov_delta);
 b = b_gen(grid_x,grid_y,hok,T_b,T_inf,delta);
-
 [L,U] = LU_decomp(A,nodes);
-
 x = solve_LU(b,L,U,nodes);
 
 
@@ -49,12 +52,32 @@ plot2a(S1,S2,S3,S4);
 heat_plots(S1,S2,S3,S4);
 end
 
-if true
-%% Transient
-[transient_euler,times_euler] = transient_euler(grid_x,grid_y,T_b,T_inf,hok,k);
-plot_transient(transient_euler,times_euler);
+
+%% Transient Case 1
+want_to_do_transient = true; % INPUT
+if want_to_do_transient
+
+% Problem 1
+[transient_euler_3x5,times_euler_3x5] = transient_euler(3,5,T_b,T_inf,hok,k,4);
+[transient_rk2_3x5,times_rk2_3x5] = transient_rk2(3,5,T_b,T_inf,hok,k,4);
+
+plot_transient_1(transient_euler_3x5,times_euler_3x5,transient_rk2_3x5,times_rk2_3x5);
+
+% Problem 2
+tic;
+[transient_euler_16x31,times_euler_16x31] = transient_euler(16,31,T_b,T_inf,hok,k,4);
+t_euler_16x31 = toc;
+
+tic;
+[transient_rk2_16x31,times_rk2_16x31] = transient_rk2(16,31,T_b,T_inf,hok,k,4);
+t_rk2_16x31 = toc;
+% TODO plot
 
 
+% Problem 3
+[t_inf_euler,times_inf_euler] = transient_euler(3,5,T_b,T_inf,hok,k,60);
+[t_inf_rk2,times_inf_rk2] = transient_rk2(3,5,T_b,T_inf,hok,k,60);
+% TODO plot
 
 
 end
