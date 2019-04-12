@@ -35,7 +35,7 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 hok = h/k;
 
 %% Steady State
-want_to_do_steady_state = false; % INPUT
+want_to_do_steady_state = true; % INPUT
 if want_to_do_steady_state
 
 % Manual Input Method
