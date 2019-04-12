@@ -35,7 +35,7 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 hok = h/k;
 
 %% Steady State
-want_to_do_steady_state = true; % INPUT
+want_to_do_steady_state = false; % INPUT
 if want_to_do_steady_state
 
 % Manual Input Method
@@ -53,8 +53,8 @@ end
 
 
 %% Transient Case 1
-want_to_do_transient = true; % INPUT
-if want_to_do_transient
+want_to_do_transient_case1 = true; % INPUT
+if want_to_do_transient_case1
 
 % Problem 1
 [transient_euler_3x5,times_euler_3x5] = transient_euler(3,5,T_b,T_inf,hok,k,4);
@@ -73,11 +73,10 @@ t_rk2_16x31 = toc;
 
 plot_transient_16x31(transient_euler_16x31,times_euler_16x31,transient_rk2_16x31,times_rk2_16x31)
 
-% Problem 3
-% Doing on a 16x31 grid
-[t_inf_euler,times_inf_euler] = transient_euler(16,31,T_b,T_inf,hok,k,20);
-[t_inf_rk2,times_inf_rk2] = transient_rk2(16,31,T_b,T_inf,hok,k,20);
-% TODO plot
+% Problem 3 - t goes to infinity - 16x31 grid
+[t_inf_euler,times_inf_euler] = transient_euler_inf(16,31,T_b,T_inf,hok,k);
+[t_inf_rk2,times_inf_rk2] = transient_rk2_inf(16,31,T_b,T_inf,hok,k);
+
 plot_transient_inf(t_inf_euler,times_inf_euler,t_inf_rk2,times_inf_rk2)
 
 
