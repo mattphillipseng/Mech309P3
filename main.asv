@@ -35,7 +35,7 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 hok = h/k;
 
 %% Steady State
-want_to_do_steady_state = false; % ******* INPUT *******
+want_to_do_steady_state = false; [eig_P,eig_D] = trans_case_2()
 if want_to_do_steady_state
 
 % Manual Input Method
@@ -53,7 +53,7 @@ end
 
 
 %% Transient Case 1
-want_to_do_transient_case1 = false; % ******* INPUT *******
+want_to_do_transient_case1 = false; % INPUT
 if want_to_do_transient_case1
 
 % Problem 1
@@ -78,16 +78,14 @@ plot_transient_16x31(transient_euler_16x31,times_euler_16x31,transient_rk2_16x31
 [t_inf_rk2,times_inf_rk2] = transient_rk2_inf(16,31,T_b,T_inf,hok,k);
 
 plot_transient_inf(t_inf_euler,times_inf_euler,t_inf_rk2,times_inf_rk2);
-end
+
 
 
 %% Transient Case 2
-want_to_do_transient_case2 = true; % ******* INPUT *******
-if want_to_do_transient_case2
+[eig_P,eig_D] = trans_case_2()
 
-[eig_P,eig_D] = eigs_case_2;
 
-%solve_trans_case2 = 
+
 
 
 

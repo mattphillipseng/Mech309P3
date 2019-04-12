@@ -1,4 +1,4 @@
-function ans = trans_case_2()
+function [eig_P,eig_D] = eigs_case_2
 
 T_b = 420;
 T_inf = 370;
@@ -22,8 +22,18 @@ C_Mat = gamma*[
 
 r_mat = gamma*[(2*omega2)+sigma , 2*omega2, 3*omega2];
 
+T_0 = [T_inf;T_inf;T_inf];
+T_soln = T_0;
 
-g
+%% Find solution - getting eigs manually
+
+
+
+%% Find solution - getting eigs using built in function
+[eig_P,eig_D] = eig(C_Mat);
+
+
+
 
 
 
