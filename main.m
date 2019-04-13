@@ -36,7 +36,7 @@ hok = h/k;
 
 %% Steady State
 % ************************* INPUT *************************
-want_to_do_steady_state = false;
+want_to_do_steady_state = true;
 % ************************* INPUT *************************
 
 if want_to_do_steady_state
@@ -91,7 +91,7 @@ end
 %% Transient Case 2
 
 % ************************* INPUT *************************
-want_to_do_transient_case2 = true;
+want_to_do_transient_case2 = false;
 % ************************* INPUT *************************
 
 if want_to_do_transient_case2
