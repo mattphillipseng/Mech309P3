@@ -1,4 +1,4 @@
-function [eig_P,eig_D,T_0,C_mat,r_mat] = eigs_case_2
+function [defl_P,defl_D,eig_P,eig_D,T_0,C_mat,r_mat] = eigs_case_2
 
 T_b = 420;
 T_inf = 370;
@@ -26,7 +26,7 @@ T_0 = [T_inf;T_inf;T_inf];
 %T_soln = T_0;
 
 %% Find eigs manually
-
+[defl_P,defl_D] = deflation_method(C_mat);
 
 
 %% Find eigs using built in function

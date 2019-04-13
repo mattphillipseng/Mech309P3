@@ -35,7 +35,10 @@ k = 413/100; %thermal conductivity of fin material (Copper) [W/cm-K]
 hok = h/k;
 
 %% Steady State
-want_to_do_steady_state = false; % ******* INPUT *******
+% ************************* INPUT *************************
+want_to_do_steady_state = false;
+% ************************* INPUT *************************
+
 if want_to_do_steady_state
 
 % Manual Input Method
@@ -53,7 +56,11 @@ end
 
 
 %% Transient Case 1
-want_to_do_transient_case1 = false; % ******* INPUT *******
+
+% ************************* INPUT *************************
+want_to_do_transient_case1 = false; 
+% ************************* INPUT *************************
+
 if want_to_do_transient_case1
 
 % Problem 1
@@ -82,16 +89,29 @@ end
 
 
 %% Transient Case 2
-want_to_do_transient_case2 = true; % ******* INPUT *******
+
+% ************************* INPUT *************************
+want_to_do_transient_case2 = true;
+% ************************* INPUT *************************
+
 if want_to_do_transient_case2
 
-[eig_P,eig_D,T_0,C,r] = eigs_case_2;
+[defl_P,defl_D,eig_P,eig_D,T_0,C_mat,r_mat] = eigs_case_2;
 
 % Solution from manually solved eigs
+tic;
+[soln_defl] = trans_case_2(defl_P,defl_D,T_0,C_mat,r_mat);
+time_deflation = toc
 
 % solution from matlab solved eigs
-[soln_eig] = trans_case_2(eig_P,eig_D,T_0,C,r);
+tic;
+[soln_eig] = trans_case_2(eig_P,eig_D,T_0,C_mat,r_mat);
+time_eig = toc
 
-
+% For plotting
+tic;
+[case2euler,times_case2euler] = case2_euler(T_b,T_inf,hok,k,4);
+time_case2euler = toc
+plot_case2(soln_defl,soln_eig,case2euler);
 
 end
