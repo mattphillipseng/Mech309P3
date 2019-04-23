@@ -19,7 +19,7 @@ x_lin = linspace(0,1,x_nodes); % 0 to 1 with x_nodes nodes
 y_lin = linspace(0,2,y_nodes); % 0 to 2 with y_nodes nodes
 [soln_X,soln_Y] = meshgrid(x_lin,y_lin); % X and Y points used in plotting
 
-for n = 1:size(times,2) % second dimension of times matrix
+for n = 1:100:size(times,2) % second dimension of times matrix
     % gets solution vector from matrix, at a specific time
     soln_vec = T_at_ts(:,n);
     
