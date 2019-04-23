@@ -1,11 +1,12 @@
 function completed = makeGif(x_nodes,y_nodes,T_at_ts,times)
 
 % initiallize for plotting
-font_size = 15;
+font_size = 13;
 line_size = 15;
 line_width = 2;
 
-levels = 100;
+%levels = 100;
+levels = [370: 0.1 :384];
 colormap_setting = 'jet';
 
 
@@ -31,7 +32,10 @@ for n = 1:100:size(times,2) % second dimension of times matrix
     %need to fix
     contourf(soln_X,soln_Y,T_at_t_mat,levels,'edgecolor','none');
     colormap(colormap_setting);
-    colorbar;
+    caxis([370,384]);
+    c = colorbar;
+    %c.Label.String = 'Temperature (K)';
+    title('Temperature Distrubution (K)','fontsize',font_size,'Interpreter','latex')
     xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');
     ylabel('y (cm)','fontsize',font_size,'Interpreter','latex');
     pbaspect([1 2 1]);
