@@ -118,6 +118,7 @@ end
 %% Transient gif maker
 want_to_make_gif = true;
 if want_to_make_gif
-[T_gif,times_gif] = transient_euler(46,91,T_b,T_inf,hok,k,4);
-
+[T_at_ts_gif,times_gif] = euler_gif(46,91,T_b,T_inf,hok,k,4);
+% call makeGif function
+makeGif(46,91,T_at_ts_gif,times_gif);
 end

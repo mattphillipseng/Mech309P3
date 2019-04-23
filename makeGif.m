@@ -1,4 +1,13 @@
-function complete = makeGif(x_nodes,y_nodes,sol_vec,times)
+function completed = makeGif(x_nodes,y_nodes,T_at_ts,times)
+
+% initiallize for plotting
+font_size = 15;
+line_size = 15;
+line_width = 2;
+
+levels = 100;
+colormap_setting = 'jet';
+
 
 % Initialize some stuff
 h = figure;
@@ -10,22 +19,32 @@ x_lin = linspace(0,1,x_nodes); % 0 to 1 with x_nodes nodes
 y_lin = linspace(0,2,y_nodes); % 0 to 2 with y_nodes nodes
 [soln_X,soln_Y] = meshgrid(x_lin,y_lin); % X and Y points used in plotting
 
-% need to do at each time step
-% rn, thw sol_vec has each time step.
-% need to separate it into the soln for one time instance
-% so that I can use my vector2matrix function
-T_at_t_mat = vector2matrix(T_at_t,x_nodes); % turns the solution vector into a 2D matrix
-
-
-for time = 1:0.5:5 % for each time...
-    % Draw plot for y = x.^n
-    % Make the plot for that time...
-    x = 0:0.01:1;
-    y = x.^n;
-    plot(x,y) 
+for n = 1:size(times,2) % second dimension of times matrix
+    % gets solution vector from matrix, at a specific time
+    soln_vec = T_at_ts(:,n);
+    
+    % turns the solution vector into a 2D matrix
+    % need to do this for graphing purposes
+    T_at_t_mat = vector2matrix(soln_vec,x_nodes);
+    
+    
+    %need to fix
+    contourf(soln_X,soln_Y,T_at_t_mat,levels,'edgecolor','none');
+    colormap(colormap_setting);
+    colorbar;
+    xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');
+    ylabel('y (cm)','fontsize',font_size,'Interpreter','latex');
+    pbaspect([1 2 1]);
     
     
     
+    % old
+    %x = 0:0.01:1;
+    %y = x.^n;
+    %plot(x,y) 
+    
+    
+    % Gif magic ???
     drawnow
       % Capture the plot as an image 
       frame = getframe(h); 
@@ -40,5 +59,5 @@ for time = 1:0.5:5 % for each time...
 end
   
 
-complete = true;
+completed = true;
 end
