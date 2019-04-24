@@ -35,7 +35,7 @@ for n = 1:100:size(times,2) % second dimension of times matrix
     caxis([370,384]);
     c = colorbar;
     %c.Label.String = 'Temperature (K)';
-    title('Temperature Distrubution (K)','fontsize',font_size,'Interpreter','latex')
+    title('Temperature Distribution (K)','fontsize',font_size,'Interpreter','latex')
     xlabel('x (cm)','fontsize',font_size,'Interpreter','latex');
     ylabel('y (cm)','fontsize',font_size,'Interpreter','latex');
     pbaspect([1 2 1]);
